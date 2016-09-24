@@ -54,6 +54,7 @@ a:hover {
 }
 .item__date {
   color: #999;
+  text-align: center;
 }
 .item__title {
   font-size: 20px;
