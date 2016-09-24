@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="utf-8">
+ <!-- Use Executando tarefas em background com Webjobs for dynamic title -->
+ <meta name="author" content="Camila Carrera">
+ <link rel="icon" type="image/png" href="/assets/imgs/favicon.png" />
+ <meta name="description" content="Camila Carrera personal website">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Camila Carrera - Web developer</title>
+
+ <!-- Twitter bootstrap (via cdn) -->
+ <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"> -->
+<link rel="stylesheet" href="/assets/css/utils/normalize.css" media="screen" type="text/css">
+<link rel="stylesheet" href="/assets/css/utils/skeleton.css" media="screen" type="text/css">
+<link rel="stylesheet" href="/assets/css/style.css" media="screen" type="text/css">
+</head>
+<body>
+<main>
+
+<header>
+  <!-- <nav class="nav">
+  <ul class="menu">
+  <li class="menu__item">home</li>
+  <li class="menu__item">whoami</li>
+  <li class="menu__item">blog</li>
+  <li class="menu__item">contact</li>
+</ul>
+</nav> -->
+
+<div class="profile">
+<!-- <img class="profile__avatar"src="assets/images/avatar_me.jpg" alt="My own picture in black and white" /> -->
+<h1 class="profile__name">Camila Carrera</h1>
+<p class="profile__description">
+  web developer, inveterate nerd and avid coffee consumer
+</p>
+
+<div class="social-media">
+<a href="mailto:contato@camilacarrera.com">
+  <img class="icon" src="/assets/imgs/icones.svg#icon-email" alt="Email para contato">
+</a>
+<a href="https://github.com/milacarrera" target="_blank">
+  <img class="icon" src="/assets/imgs/icones.svg#icon-github" alt="Link para o meu github">
+</a>
+<a href="https://br.linkedin.com/in/camila-carrera" target="_blank">
+  <img class="icon" src="/assets/imgs/icones.svg#icon-linkedin" alt="Link para meu linkedin">
+</a>
+<a href="https://twitter.com/cscarrera" target="_blank">
+  <img class="icon" src="/assets/imgs/icones.svg#icon-twitter" alt="Link para meu twitter">
+</a>
+<a href="http://www.slideshare.net/camilascarrera" target="_blank">
+  <img class="icon" src="/assets/imgs/icones.svg#icon-slideshare" alt="Link para meu slideshare">
+</a>
+</div>
+
+</div>
+
+</header>
+
+<div class="container">
+  <br>
+  <div class='row'>
+    <a class='btn btn-default' href='/'>< Home</a>
+  </div>
+  <br>
+  <div class='row'>
+    <div class="post">
+      <h2 class="post__title">Executando tarefas em background com Webjobs</h2>
+      <p class="post__date">23/09/2016</p>
+      <h3 id="Introducao"><a href="#Introducao" class="headerlink" title="Introdução"></a>Introdução</h3><p>O texto a seguir é uma versão “estendida” da minha apresentação sobre Azure Webjobs no dotnetConf.local Salvador. Os slides estão disponíveis no <a href="http://www.slideshare.net/camilascarrera/executando-tarefas-em-background-com-webjobs" target="_blank" rel="external">aqui</a>.</p>
+<p>Nesse post, vou apresentar uma introdução do que são e como funcionam os <strong>Webjobs</strong>, alguns casos de uso e um breve tutorial de como criar e fazer deploy de Webjob agendado.</p>
+<p>Mas antes de começar a abordar os Webjobs, é importante explicar resumidamente o que são os <strong>App Services</strong>.</p>
+<h3 id="App-Services"><a href="#App-Services" class="headerlink" title="App Services"></a>App Services</h3><p><strong>App Services</strong>, ou Serviços de Aplicativos, é uma PaaS (platform as a service) capaz de integrar vários serviços do Microsoft Azure, que antes eram entregues separadamente, em uma única solução. Além disso, facilita a integração com vários SaaS (software as a service) e aplicações <a href="https://en.wikipedia.org/wiki/On-premises_software" target="_blank" rel="external">on-prem</a> como OneDrive, Dropbox, Office365, entre outros.</p>
+<p>Os tipos de apps oferecidos pelo App Service são:</p>
+<p><img src="app-services.png" alt="alt text" title="Imagem exibindo os quatro tipos de app services disponíveis: web, mobile, API e logic apps"></p>
+<ul>
+<li><strong>Web Apps</strong>: para de websites e aplicações web</li>
+<li><strong>Mobile Apps</strong>: para back-end de aplicações móveis</li>
+<li><strong>API Apps</strong>: oferece funcionalidades para desenvolver, hospedar e consumir APIs</li>
+<li><strong>Logic App</strong>: para implementar integrações e fluxos de trabalho escaláveis e automatizar o acesso e uso de dados na nuvem, sem precisar programar.</li>
+</ul>
+<p>Dentre esses tipos de serviços, os de Web Apps e Mobile Apps são os que suportam Webjobs.<br>Para maiores detalhes sobre App Services, recomendo a leitura dos seguintes artigos (em inglês):</p>
+<ul>
+<li><a href="http://weblogs.asp.net/scottgu/announcing-the-new-azure-app-service" target="_blank" rel="external">Announcing the new Azure App Service</a></li>
+<li><a href="http://www.informit.com/articles/article.aspx?p=2423911" target="_blank" rel="external">Introduction to Azure App Service</a></li>
+</ul>
+<h3 id="O-que-sao-Webjobs"><a href="#O-que-sao-Webjobs" class="headerlink" title="O que são Webjobs"></a>O que são Webjobs</h3><p>Você já precisou executar alguma rotina em uma determinada data e hora específica (muitas vezes em horários inconvenientes) e teve que esperar até esse determinado momento para iniciar a rotina manualmente? Ou tem alguma tarefa que precisa ser executada de forma recorrente (por exemplo, processar logs de uma aplicação todos os dias à meia noite)?</p>
+<p>Então Webjobs é para você! :)</p>
+<p>O <strong>Azure Webjobs</strong> é uma funcionalidade do App Service que permite executar tarefas (jobs) em segundo plano, agendadas ou não. Esses jobs são aplicações <em>console</em> ou scripts e podem ser escritos em diversas linguagem, não apenas em C#. Atualmente, são suportados os seguinte formatos para execução do job: .cmd, .exe, .bat, .ps1, .sh, .php, .py, .js (node.js) e jar.</p>
+<p>Os webjobs são executados na mesma VM (máquina virtual) que seu web app, então os recursos dessa VM serão compartilhados entre o web app e o(s) webjob(s). Por isso, eles são indicados para processamentos mais leves, pois processamentos mais pesados que exigem muitos recursos dessa VM podem causar problemas no acesso ao web app, como lentidão ou até indisponibilidade. Mas se você for usar esse web app (ou outro app service) apenas para executar webjobs, isso não chega a ser um grande problema.</p>
+<p>Os jobs podem ser executados de três formas:</p>
+<ul>
+<li><strong>Scheduled</strong>: são jobs com execução agendada. Você define uma data e hora para a primeira execução e a recorrência na qual esse job será executado, que pode ser em: meses, semanas, dias, horas, minutos ou segundos. É possível definir uma data final, o que significa que após essa data o job não será mais executado. <em>A data final não é obrigatória.</em></li>
+<li><strong>Continuous</strong>: são jobs que serão executados continuamente (até que seja explicitamente parados). Para executar tarefas contínuas, é importante ativar nas configurações do seu web app a opção “Always on” (ou Sempre ativo), pois ele pode parar de executar quando passar muito tempo ocioso, o que, consequentemente, interromperá a execução do job. Por exemplo, quando seu web app / website não é acessado durante muito tempo.</li>
+<li><strong>On demand</strong>: jobs que serão executados sob demanda, manualmente mesmo, através do portal do Azure.</li>
+</ul>
+<p>No novo portal do Azure, aparecem apenas duas formas de execução do job: <strong>Continuous</strong> e <strong>Triggered</strong>, sendo que esse último engloba os jobs agendados e sob demanda. Na prática, os Scheduled Webjobs são Triggered Jobs que são disparados pelo <strong>Azure Scheduler</strong>.</p>
+<h3 id="Casos-de-Uso"><a href="#Casos-de-Uso" class="headerlink" title="Casos de Uso"></a>Casos de Uso</h3><p>Alguns casos de uso muito comuns e que são sempre usados como exemplo nos artigos sobre webjobs: processamento de imagens, logs, filas <a href="https://azure.microsoft.com/en-us/documentation/articles/storage-dotnet-how-to-use-queues/" target="_blank" rel="external">(ver Azure Storage Queues)</a> , backups, etc.</p>
+<p>No <strong>Push Questões</strong>, nós usamos webjobs para executar algumas tarefas diárias referente às assinaturas, mas nosso principal uso é para gerar materiais de estudo personalizados para nossos assinantes. Um exemplo é nosso principal produto: o <strong>push de questões</strong>.</p>
+<p>O push de questões consiste em uma espécie de “prova personalizada” que nós geramos para nossos assinantes semanalmente, com questões de provas recentes pré-selecionadas de concursos públicos da área jurídica. Esses <em>pushes</em> são gerados baseados nos assuntos de interesse de cada assinante. Por exemplo, se um assinante está estudando as disciplinas de Direito Constitucional e Direito Administrativo, nós selecionamos questões dessas disciplinas dentro dessas provas pré-selecionadas e enviamos para ele. Esses materiais são gerados e enviados por e-mail toda semana na madrugada de quinta para sexta.</p>
+<p>No inicio, nós iniciávamos a execução dessa rotina manualmente. No caso, nós tínhamos um <em>console application</em> que continha essa rotina e quando chegava no horário, nós executávamos. Seria algo como um webjob “on demand”, mas executando localmente. Além da inconveniência do horário, essa tafera acabava demorando muito devido aos recursos limitados da máquina local. Além disso corria o risco de ter a execução interrompida caso a conexão com a internet fosse perdida, pois essa rotina fazia frequente acesso à banco de dados na nuvem (<strong>SQL Azure</strong>) e armazenamento na nuvem também (<strong>Azure Storage</strong>).</p>
+<p>Diante desses possíveis problemas, nós vimos a necessidade de automatizar e agendar a execução dessa rotina. A primeira opção pensada foi fazer isso usando <strong>Worker Roles</strong>, que é um tipo de serviço de cloud, altamente escalável, personalizável e configurável. Em resumo, é uma VM que roda um Windows Server e não vem com o IIS (Internet Information Service) instalado por padrão, como acontece com o <strong>Web Role</strong>. No geral, os Worker Roles são usados justamente para executar processamento em segundo plano e muitas vezes são usados em conjunto com os Web Roles.</p>
+<p>No entanto, Worker Roles oferecia muito mais “poder” do que realmente precisávamos, além de ter um custo mais elevado e maior dificuldade para configurar. Foi então que descobrimos os Webjobs.</p>
+<p>A seguir, vamos ver como é simples criar um Webjob!</p>
+<h3 id="Criando-um-Webjob"><a href="#Criando-um-Webjob" class="headerlink" title="Criando um Webjob"></a>Criando um Webjob</h3><p>Nesse breve tutorial, vou mostrar como criar um Triggered - Scheduled Webjob, ou seja, um webjob disparado por um Azure Scheduler. A rotina em si não terá nenhum grande processamento, só vai exibir alguma mensagem no console e enviar um e-mail.</p>
+<p>Antes de começar, você precisa executar alguns passos:</p>
+<ul>
+<li>Ter uma conta no Azure. <em>(OH, REALLY?? ¬.¬)</em> Se você ainda não tem uma conta, <a href="https://azure.microsoft.com/pt-br/free/" target="_blank" rel="external">clique aqui para criar</a>. (Free Tier)</li>
+<li>Criou a conta? Pronto. Agora você precisa criar uma conta de armazenamento (storage account). Para não prolongar esse tutorial, <a href="https://azure.microsoft.com/pt-br/documentation/articles/storage-create-storage-account-classic-portal/#criar-uma-conta-de-armazenamento" target="_blank" rel="external">clique aqui para ver como fazer</a>. Esse passo é necessário para poder armazenar logs de execução do webjob.</li>
+<li>Criar um App Service do tipo Web App, onde faremos o deploy do webjob. Você pode adiantar esse passo agora, mas pode também deixar para fazer isso no momento do deploy.</li>
+</ul>
+<p>Para esse exemplo, estou usando o Visual Studio Professional 2013. Se você não tiver nenhum instalado, pode instalar o <a href="https://www.visualstudio.com/pt-br/products/visual-studio-community-vs.aspx" target="_blank" rel="external">Visual Studio Community 2015</a> que serve também. (É FREE!)</p>
+<h4 id="Criando-um-novo-projeto"><a href="#Criando-um-novo-projeto" class="headerlink" title="Criando um novo projeto"></a>Criando um novo projeto</h4><p>Para criar um novo projeto de webjob, clique em <strong>File</strong> &gt;&gt; <strong>New</strong> &gt;&gt; <strong>Project</strong> (ou Ctrl+Shift+N). Em <strong>Templates</strong>, selecione <strong>Cloud</strong> e <strong>Azure Webjob</strong>. Dê um nome para seu projeto e clique em <strong>OK</strong>.</p>
+<p><img src="1_new_project.PNG" alt="alt text" title="Imagem mostra como criar um novo projeto do tipo Azure Webjob"></p>
+<p>Esse será o código inicial e a estrutura do projeto:</p>
+<p><img src="2_initial_code.PNG" alt="alt text" title="Imagem mostra o código inicial após criar um novo projeto"></p>
+<p>Antes de mexer em código, temos que adicionar uma pequena configuração no <strong>App.config</strong> que foi gerado no projeto. Temos que definir as <strong>connection strings</strong> para <strong>AzureWebJobsDashboard</strong> e <strong>AzureWebJobsStorage</strong>. Você pode encontrar essa connection string acessando o portal do Azure. Na opção <strong>Contas de armazenamento (clássicas)</strong>, selecione a conta de armazenamento que você criou lá no início, depois a opção <strong>Chaves</strong> e copie o valor do campo <strong>CADEIA DE CONEXÃO PRIMÁRIA</strong> e cole nos lugares indicados no <strong>App.config</strong>.</p>
+<p><img src="3_connection_string.PNG" alt="alt text" title="Imagem mostra onde colocar sua connection string do storage"></p>
+<p>Voltando para o código…</p>
+<p>Queremos um webjob agendado, certo? Então o primeiro passo é remover aquela última linha do método <strong>Main</strong> onde tem <strong>host.RunAndBlock();</strong>. Essa linha faz com que o programa continue executando até ser explicitamente parado. Só serviria se estivéssemos criando um webjob contínuo.</p>
+<p>O código final de <strong>Program.cs</strong> deve ficar assim (ver comentários):</p>
+<p><script src="https://gist.github.com/milacarrera/aaa67f748fff981915060f69872112e7.js"></script><br>Essa classe <strong>Mail</strong> faz envio de e-mails usando uma conta do gmail. Para ver o código dessa classe no Gist, <a href="http://localhost:4005/blog/Executando-tarefas-em-background-com-Webjobs/" target="_blank" rel="external">clique aqui</a>.</p>
+<h4 id="Publicando-um-Webjob"><a href="#Publicando-um-Webjob" class="headerlink" title="Publicando um Webjob"></a>Publicando um Webjob</h4><p>Para fazer deploy do webjob, clique com o botão direito no projeto e escolha a opção <strong>Publish as Azure Webjob…</strong></p>
+<p><img src="4_publish_as_wj.PNG" alt="alt text" title="Imagem mostra o caminho para publicar como webjob"></p>
+<p>Você verá uma tela para configurar o webjob. Vamos configurar um webjob agendado (Run on a Schedule), recorrente (Recurring Job), sem data final (No end date), que se repetirá a cada 1 dia, às 6:00 AM. Fique atento à <em>timezone</em>, para que o webjob execute no horário esperado.</p>
+<p><img src="5_add_webjob.PNG" alt="alt text" title="Imagem mostra como configurar o agendamento do webjob"></p>
+<p>Dê OK. Em seguida você terá que selecionar o web app no qual você vai publicar o webjob. Vá em <strong>Microsoft Azure App Service</strong>, selecione a sua <strong>Subscription</strong>, depois o web app que você criou e dê OK.<br>Caso você não tenha criado o web app lá no início, clique em <strong>New</strong> e crie agora. Depois clique em <strong>Next</strong> &gt;&gt; <strong>Next</strong> &gt;&gt; <strong>Publish</strong>. Você pode ver o andamento da publicação na aba <strong>Azure App Service Activity</strong>. Quando terminar, deve aparecer assim:</p>
+<p><img src="6_deploy_finished.PNG" alt="alt text" title="Publicação do webjob finalizado"></p>
+<p>Um arquivo JSON será criado com as configurações de execução do webjob.</p>
+<p><img src="7_json_settings.PNG" alt="alt text" title="Mostra o arquivo de configuração do agendamento"></p>
+<p>Você pode alterar diretamente nesse arquivo e publicar da mesma forma que foi descrita anteriormente. Se você preferir configurar por aquela interface gráfica que aparece na primeira vez que você publica o webjob, basta remover esse arquivo JSON e seguir os passos para publicar novamente.</p>
+<p>Após publicar, depois que chegar no horário que você definiu como <em>startTime</em>, o webjob deve ser executado. Para ver os logs da execução, acesse o Portal do Azure, na opção <strong>Serviços de Aplicativos</strong>, selecione o web app que você criou, depois a opção <strong>Trabalhos Web</strong>. Clique no Webjob que você criou e depois em <strong>Logs</strong>. Abrirá uma lista de execuções desse job. Clique em uma delas, e deve aparecer uma tela assim:</p>
+<p><img src="8_log_webjob.PNG" alt="alt text" title="Mostra os logs da execução do webjob no portal do azure"></p>
+<p>Note que o horário dos logs é o horário do servidor. Mas como a timezone foi configurada como Brasilia (GMT-3), o job foi executado às 9:00 AM -3, ou seja, às 6:00 AM.</p>
+<p>E pronto, você criou, publicou e executou seu primeiro webjob! :)</p>
+
+    </div>
+    
+      <div id="disqus_thread"></div>
+      <script>
+      (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = '//camila-carrera.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+    
+  </div>
+</div>
+
+<div class="push"></div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    2016 - Camila Carrera - Made with <a href="https://hexo.io/" target="_blank">Hexo</a>
+  </div>
+</footer>
+
+</body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-84656064-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</html>

@@ -1,102 +1,102 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  
-  <title>彙整 | Hexo</title>
-  <meta name="author" content="John Doe">
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ <meta charset="utf-8">
+ <!-- Use undefined for dynamic title -->
+ <meta name="author" content="Camila Carrera">
+ <link rel="icon" type="image/png" href="/assets/imgs/favicon.png" />
+ <meta name="description" content="Camila Carrera personal website">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Camila Carrera - Web developer</title>
 
-  
-  <meta property="og:site_name" content="Hexo"/>
-
-  
-    <meta property="og:image" content="undefined"/>
-  
-
-  <link href="/favicon.png" rel="icon">
-  <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
-  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
-  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-  
-
+ <!-- Twitter bootstrap (via cdn) -->
+ <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"> -->
+<link rel="stylesheet" href="/assets/css/utils/normalize.css" media="screen" type="text/css">
+<link rel="stylesheet" href="/assets/css/utils/skeleton.css" media="screen" type="text/css">
+<link rel="stylesheet" href="/assets/css/style.css" media="screen" type="text/css">
 </head>
-
-
 <body>
-  <header id="header" class="inner"><div class="alignleft">
-  <h1><a href="/">Hexo</a></h1>
-  <h2><a href="/"></a></h2>
+<main>
+
+<header>
+  <!-- <nav class="nav">
+  <ul class="menu">
+  <li class="menu__item">home</li>
+  <li class="menu__item">whoami</li>
+  <li class="menu__item">blog</li>
+  <li class="menu__item">contact</li>
+</ul>
+</nav> -->
+
+<div class="profile">
+<!-- <img class="profile__avatar"src="assets/images/avatar_me.jpg" alt="My own picture in black and white" /> -->
+<h1 class="profile__name">Camila Carrera</h1>
+<p class="profile__description">
+  web developer, inveterate nerd and avid coffee consumer
+</p>
+
+<div class="social-media">
+<a href="mailto:contato@camilacarrera.com">
+  <img class="icon" src="/assets/imgs/icones.svg#icon-email" alt="Email para contato">
+</a>
+<a href="https://github.com/milacarrera" target="_blank">
+  <img class="icon" src="/assets/imgs/icones.svg#icon-github" alt="Link para o meu github">
+</a>
+<a href="https://br.linkedin.com/in/camila-carrera" target="_blank">
+  <img class="icon" src="/assets/imgs/icones.svg#icon-linkedin" alt="Link para meu linkedin">
+</a>
+<a href="https://twitter.com/cscarrera" target="_blank">
+  <img class="icon" src="/assets/imgs/icones.svg#icon-twitter" alt="Link para meu twitter">
+</a>
+<a href="http://www.slideshare.net/camilascarrera" target="_blank">
+  <img class="icon" src="/assets/imgs/icones.svg#icon-slideshare" alt="Link para meu slideshare">
+</a>
 </div>
-<nav id="main-nav" class="alignright">
-  <ul>
-    
-      <li><a href="/">Home</a></li>
-    
-      <li><a href="/archives">Archives</a></li>
-    
-  </ul>
-  <div class="clearfix"></div>
-</nav>
-<div class="clearfix"></div>
+
+</div>
+
 </header>
-  <div id="content" class="inner">
-    <div id="main-col" class="alignleft"><div id="wrapper">
-<h2 class="archive-title">彙整</h2>
 
+<div class="container">
+  <br>
+  <h3>Posts</h3>
+  <div class="post__list">
+    <ul>
+      
+        <li>
+          <div class="row">
+            <div class="two columns">
+              <p class="item__date">23/09/2016</p>
+            </div>
+            <div class="ten columns">
+              <p class="item__title"><a href="/blog/Executando-tarefas-em-background-com-Webjobs/">Executando tarefas em background com Webjobs</a></p>
+            </div>
+          </div>
+          
+          </li>
+          
+        </ul>
+      </div>
+    </div>
 
-  <div class="archive">
-    
-      <article class="post">
-        <div class="post-content">
-          <header>
-            <div class="icon"></div>
-            <time datetime="2016-09-06T14:30:09.147Z"><a href="/2016/09/06/hello-world/">2016-09-06</a></time>
-            
-              <h1 class="title"><a href="/2016/09/06/hello-world/">Hello World</a></h1>
-            
-          </header>
-        </div>
-      </article>
-    
+<div class="push"></div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    2016 - Camila Carrera - Made with <a href="https://hexo.io/" target="_blank">Hexo</a>
   </div>
-</div></div>
-    <aside id="sidebar" class="alignright">
-  <div class="search">
-  <form action="//google.com/search" method="get" accept-charset="utf-8">
-    <input type="search" name="q" results="0" placeholder="搜尋">
-    <input type="hidden" name="q" value="site:yoursite.com">
-  </form>
-</div>
-
-  
-
-  
-</aside>
-    <div class="clearfix"></div>
-  </div>
-  <footer id="footer" class="inner"><div class="alignleft">
-  
-  &copy; 2016 John Doe
-  
-</div>
-<div class="clearfix"></div></footer>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-<script src="/js/jquery.imagesloaded.min.js"></script>
-<script src="/js/gallery.js"></script>
-
-
-
-
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
-<script src="/fancybox/jquery.fancybox.pack.js"></script>
-<script type="text/javascript">
-(function($){
-  $('.fancybox').fancybox();
-})(jQuery);
-</script>
+</footer>
 
 </body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-84656064-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
 </html>
