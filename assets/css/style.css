@@ -53,7 +53,6 @@ a:hover {
   font-size: 18px;
 }
 .item__date {
-  text-align: center;
   color: #999;
 }
 .item__title {
@@ -173,7 +172,7 @@ a:hover {
   height: 5px;
   border-radius: 50%;
   position: absolute;
-  top: 15px;
+  top: 12px;
   left: -15px;
 }
 .post ol {
@@ -196,7 +195,7 @@ a:hover {
 }
 @media (max-width: 480px) {
   .profile__name {
-    font-size: 35px;
+    font-size: 30px;
   }
   .profile__description {
     width: 100%;
